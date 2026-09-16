@@ -17,6 +17,29 @@ runtime-detected, so everything is developable and testable here without hardwar
 | `HARDWARE.md` | What the rig actually does. Filled in on the Pi, from a real probe. |
 | `scripts/probe-hardware.sh` | Collects the Phase 0 data. Runs on the Pi. |
 
+## Running it
+
+```bash
+pip install -e ".[dev]"
+pytest                                    # 70 tests, no camera needed
+
+python -m pipeline --dry-run              # print the pipeline it would build
+python -m pipeline --dry-run --source v4l2 --device /dev/video0 --format h264
+```
+
+`--dry-run` builds the real pipeline description and prints it without needing a
+camera, GStreamer, or the Pi. Pipeline construction (`pipeline/graph.py`) is a pure
+function of config plus detected capture mode, so every branch is testable here; only
+`pipeline/runtime.py` touches GStreamer.
+
+| Module | |
+|---|---|
+| `pipeline/detect.py` | Parses `v4l2-ctl` output, picks the cheapest capture mode (h264 > mjpeg > raw) |
+| `pipeline/graph.py` | Pure: config + mode → pipeline description |
+| `pipeline/controls.py` | Finds and neutralises on-device reframing (constraint #1) |
+| `pipeline/storage.py` | Refuses to write clips to the SD card (constraint #4) |
+| `pipeline/runtime.py` | The only module that imports GStreamer |
+
 ## On deploy, on the Pi
 
 ```bash

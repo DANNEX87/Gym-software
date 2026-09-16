@@ -1,0 +1,21 @@
+[project]
+name = "rack-vision"
+version = "0.1.0"
+description = "Fixed-camera lifting analysis rig"
+requires-python = ">=3.11"
+# No runtime dependencies from PyPI: GStreamer comes from apt on the Pi
+# (python3-gi, gstreamer1.0-*), and the pure layers use only the stdlib.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+rack-vision = "pipeline.cli:run_cli"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+include = ["pipeline*", "metrics*", "overlay*"]

@@ -60,7 +60,8 @@ the codebase must not assume it is running on either one.
 - **Phase 0 — hardware shakeout: pending deploy.** Run `scripts/probe-hardware.sh` on the
   Pi and fill in `HARDWARE.md`. This resolves config values; it does **not** gate writing
   code. `UNVERIFIED` rows mark what the code must not assume, not work that is blocked.
-- **Phase 1 — live preview + delayed replay.** Buildable now, parameterised on the capture
-  format. Design in `docs/PHASE1-DESIGN.md`.
+- **Phase 1 — live preview + delayed replay: capture path built.** Design in
+  `docs/PHASE1-DESIGN.md`, implemented in `pipeline/`. Format is detected at runtime.
+  Not yet run against real hardware. Replay-on-demand playback is still to do.
 - **Phase 2 — Hailo pose inference.** The interface and everything downstream of it are
   buildable now. Running it needs the AI HAT+.

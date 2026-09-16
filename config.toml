@@ -5,11 +5,17 @@
 # every metric downstream. Fill them in from real measurement, not estimates.
 
 [camera]
-# device      = "/dev/videoN"   # UNSET — from HARDWARE.md §2
-# format      = ""              # UNSET — "h264" | "mjpeg" | "yuyv", from HARDWARE.md §1
-# width       = 1920
-# height      = 1080
-# framerate   = 30              # use the MEASURED rate, not the advertised one
+# device    = "/dev/videoN"   # UNSET — from HARDWARE.md §2
+# format    = ""              # leave unset to DETECT at runtime (preferred).
+#                             # Set to force one: "h264" | "mjpeg" | "yuy2" | "nv12".
+#                             # Detection prefers h264 > mjpeg > raw, because the
+#                             # Pi 5 has no hardware encoder.
+width       = 1920
+height      = 1080
+framerate   = 30              # use the MEASURED rate, not the advertised one.
+                              # If the camera cannot deliver this geometry, capture
+                              # fails rather than substituting another — a different
+                              # frame size invalidates calibration.
 
 # Constraint #1: never set these true. See CLAUDE.md.
 auto_framing = false

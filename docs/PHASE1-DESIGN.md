@@ -1,9 +1,12 @@
 # Phase 1 — live preview + delayed replay: buffering approach
 
-**Status: proposal only. No pipeline code written.** Per the kickoff, the buffering
-approach gets explained and agreed before anything is built. It is also genuinely
-blocked: the right pipeline depends on the H.264 answer from Phase 0, which has not
-been measured yet.
+**Status: design B implemented** in `pipeline/`. The buffering approach below was
+agreed before anything was built, and the code follows it — `pipeline/graph.py` is a
+pure function from config to pipeline description, so the decisions in this document
+are pinned by tests in `tests/test_graph.py` rather than left as prose.
+
+The format branch in §3 is resolved at runtime by `pipeline/detect.py`, not hardcoded,
+so the same codebase handles whichever answer Phase 0 produces.
 
 Goal: full-screen live preview on the TV, plus a configurable N-second replay loop, so
 you can finish a set, turn around, and watch it.
