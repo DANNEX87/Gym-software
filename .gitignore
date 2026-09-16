@@ -1,0 +1,10 @@
+# Phase 0 probe output — machine-specific, regenerate with scripts/probe-hardware.sh
+probe-results/
+
+# Clips live on the USB SSD and must never be committed.
+# clips/ should be a symlink or mountpoint to the SSD, not a real directory here.
+clips/
+
+__pycache__/
+*.pyc
+.venv/

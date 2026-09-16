@@ -1,0 +1,32 @@
+# Rack Vision configuration
+#
+# Calibration values are deliberately UNSET. They depend on the mount geometry and
+# on Phase 0 findings, and a wrong-but-plausible number here would silently corrupt
+# every metric downstream. Fill them in from real measurement, not estimates.
+
+[camera]
+# device      = "/dev/videoN"   # UNSET — from HARDWARE.md §2
+# format      = ""              # UNSET — "h264" | "mjpeg" | "yuyv", from HARDWARE.md §1
+# width       = 1920
+# height      = 1080
+# framerate   = 30              # use the MEASURED rate, not the advertised one
+
+# Constraint #1: never set these true. See CLAUDE.md.
+auto_framing = false
+tracking     = false
+
+[geometry]
+# Mount: chest height, 8-10 ft back, square to the lifting line.
+# height_m        =   # UNSET — lens centre above floor
+# distance_m      =   # UNSET — lens to lifting line
+# All measurements are frame-relative, so these only matter for converting
+# pixels to real units. Re-measure and re-record after ANY mount disturbance.
+
+[replay]
+segment_seconds = 10    # N — the replay window; also splitmuxsink segment length
+ring_segments   = 12    # rolling clips kept on the SSD before overwrite
+loop            = true
+
+[storage]
+# Must resolve to the USB SSD. Never the SD card. See CLAUDE.md #4.
+clips_dir = "clips"
