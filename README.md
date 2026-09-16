@@ -3,34 +3,28 @@
 Fixed-camera lifting analysis rig for a home gym.
 Raspberry Pi 5 · Insta360 Connect (USB/UVC) · 65" TV on HDMI · Hailo-8 AI HAT+ (later).
 
-## Where this is
+## How this project is built
 
-**Phase 0 — hardware shakeout: not complete.** No probe has been run on the Pi yet.
+Written in a **cloud container**, deployed to a **Pi 5**. The codebase never assumes it
+is on the target: capture format, device nodes, and geometry are config-driven and
+runtime-detected, so everything is developable and testable here without hardware.
 
 | | |
 |---|---|
 | `CLAUDE.md` | Standing constraints. Read first, every session. |
-| `HARDWARE.md` | Phase 0 findings — the source of truth. Currently a template. |
-| `scripts/probe-hardware.sh` | Run this on the Pi to collect Phase 0 data. |
 | `docs/PHASE1-DESIGN.md` | Buffering approach for live preview + delayed replay. |
-| `config.toml` | Camera geometry + calibration. Values deliberately unset. |
+| `config.toml` | Camera geometry + calibration. Filled in at deploy time. |
+| `HARDWARE.md` | What the rig actually does. Filled in on the Pi, from a real probe. |
+| `scripts/probe-hardware.sh` | Collects the Phase 0 data. Runs on the Pi. |
 
-## Next step — on the Pi
-
-```bash
-sudo ./scripts/probe-hardware.sh
-```
-
-Then fill in `HARDWARE.md` from `probe-results/<timestamp>/`, pasting raw output into
-the appendix. The three questions that decide the architecture, plus the one the
-kickoff did not ask, are listed at the end of the probe run.
-
-Nothing in Phase 1 should be built before that is done.
-
-## Setup note
-
-`clips/` must resolve to the USB SSD, not the SD card:
+## On deploy, on the Pi
 
 ```bash
-ln -s /mnt/ssd/rack-vision-clips clips
+sudo ./scripts/probe-hardware.sh          # collect
+# transcribe probe-results/<timestamp>/ into HARDWARE.md, then set config.toml
+ln -s /mnt/ssd/rack-vision-clips clips    # clips on the SSD, never the SD card
 ```
+
+The probe answers four things that change runtime behaviour: whether the camera offers
+H.264, whether the two lenses are separate nodes, the USB link speed, and whether
+auto-framing can be disabled and made to stay disabled.

@@ -1,16 +1,17 @@
 # HARDWARE.md — Phase 0 findings
 
-> ## ⚠ STATUS: UNVERIFIED — NO PROBE HAS BEEN RUN
+> ## STATUS: awaiting probe — values are filled in at deploy time
 >
-> This file is a **template**, not a result. Every measured cell below reads
-> `UNVERIFIED` because the Phase 0 session ran in a cloud container, not on the Pi:
-> x86_64 Xeon, no `/dev/video*`, no `/dev/snd`, no USB bus, no `v4l2-ctl`.
+> This file is the **source of truth for what the rig actually does**, and it gets
+> written on the Pi, not in the cloud container the codebase is developed in.
 >
-> Nothing here was measured. Nothing here may be trusted until it is.
+> Every measured cell reads `UNVERIFIED` because no probe has run yet. Those rows mark
+> **what the code must not assume** — they are not blocked work. Code targeting any of
+> them should detect at runtime or read `config.toml`.
 >
-> **To fill this in:** run `sudo ./scripts/probe-hardware.sh` on the Pi with the
-> Connect plugged in, then transcribe from `probe-results/<timestamp>/`, pasting
-> raw output into the appendix. Delete this banner only when the tables are real.
+> **To fill this in:** run `sudo ./scripts/probe-hardware.sh` on the Pi with the Connect
+> plugged in, then transcribe from `probe-results/<timestamp>/`, pasting raw output into
+> the appendix. Per `CLAUDE.md` #5: measured values only, never inferred ones.
 
 Rig: Raspberry Pi 5 · Insta360 Connect (USB/UVC) · 65" TV on HDMI · Hailo-8 AI HAT+ (not yet installed)
 
